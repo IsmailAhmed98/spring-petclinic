@@ -12,7 +12,7 @@ pipeline{
                 sh 'mvn package'
             }
         }
-        stage('Archives'){
+        stage('Archive'){
             steps{
                 archiveArtifacts artifacts: 'target/*.jar'
             }
