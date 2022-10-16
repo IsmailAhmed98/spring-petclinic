@@ -1,5 +1,5 @@
 pipeline{
-    agent{label 'OPENJDK-1'}
+    agent{label 'OPENJDK_1'}
     stages{
         stage('VCS'){
             steps{
