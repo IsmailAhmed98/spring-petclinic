@@ -15,7 +15,10 @@ pipeline{
             }
         }
         stage('Artifactory'){
-            archiveArtifacts artifacts: 'target/*.jar'
+            steps{
+                    archiveArtifacts artifacts: 'target/*.jar'
+            }
+            
         }
     }
 }
