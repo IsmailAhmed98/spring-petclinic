@@ -20,6 +20,26 @@ pipeline{
             }
             
         }
+        stage('Artifactory Config'){
+            steps{
+                rtmavenDeployer(
+                    id:"Maven_Deployer",
+                    sevrerId:"JFROG-ID",
+                    releaseRepo:"prac-libs-release-local",
+                    snapshotRepo:"prac-libs-snapshot-local"
+                )
+            } 
+        }
+        stage('execute maven'){
+            steps{
+                rtMavenRun(
+                    tool:MVN,
+                    pom:'pom.xml',
+                    goals:'clean package',
+                    deployerId:"Maven_Deployer"
+                )
+            }
+        }
     }
     post{
         always{
