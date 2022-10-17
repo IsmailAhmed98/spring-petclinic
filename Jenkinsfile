@@ -1,47 +1,47 @@
-pipeline{
-    agent{label 'OPENJDK_1'}
-    stages{
-        stage('VCS'){
-            steps{
-
-
-                git branch: 'main', url: 'https://github.com/IsmailAhmed98/spring-petclinic.git'
-
+pipeline {
+    agent any
+    stages {
+        stage ('Clone') {
+            steps {
+                git url: "https://github.com/jfrog/project-examples.git"
             }
         }
+
+        stage ('Artifactory configuration') {
+            steps {
+                rtMavenDeployer (
+                    id: "MAVEN_DEPLOYER",
+                    serverId: JFROG-ID,
+                    releaseRepo: prac-libs-release-local,
+                    snapshotRepo: prac-libs-snapshot-local
+                )
+
+                
+            }
+        }
+
+        stage ('Exec Maven') {
+            steps {
+                 
+                    rtMavenRun (
+                        tool: MVN, // Tool name from Jenkins configuration
+                        pom: 'pom.xml',
+                        goals: 'clean install ',
+                        deployerId: "MAVEN_DEPLOYER"
+                        
+                    )
+                }
+            }
         
-        stage('Artifactory'){
-            steps{
-                    archiveArtifacts artifacts: 'target/*.jar'
-            }
-            
-        }
-        stage('Artifactory Config'){
-            steps{
-                rtMavenDeployer(
-                    id:"Maven_Deployer",
-                    serverId:"JFROG-ID",
-                    releaseRepo:"prac-libs-release-local",
-                    snapshotRepo:"prac-libs-snapshot-local"
-                )
-            } 
-        }
-        stage('execute maven'){
-            steps{
-                rtMavenRun(
-                    tool: MVN,
-                    pom:"pom.xml",
-                    goals:"clean install",
-                    deployerId:"Maven_Deployer"
+
+        
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: JFROG-ID
                 )
             }
-        }
-    }
-    post{
-        always{
-            mail subject: 'Build completed',
-                 body: 'Build has been completed',
-                 to: 'ismailahmed@gmail.com'
         }
     }
 }
