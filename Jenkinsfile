@@ -24,7 +24,7 @@ pipeline{
             steps{
                 rtMavenDeployer(
                     id:"Maven_Deployer",
-                    sevrerId:"JFROG-ID",
+                    serverId:"JFROG-ID",
                     releaseRepo:"prac-libs-release-local",
                     snapshotRepo:"prac-libs-snapshot-local"
                 )
