@@ -11,7 +11,7 @@ pipeline {
             steps {
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
-                    serverId: JFROG-ID,
+                    serverId: "JFROG-ID",
                     releaseRepo: prac-libs-release-local,
                     snapshotRepo: prac-libs-snapshot-local
                 )
@@ -39,7 +39,7 @@ pipeline {
         stage ('Publish build info') {
             steps {
                 rtPublishBuildInfo (
-                    serverId: JFROG-ID
+                    serverId: "JFROG-ID"
                 )
             }
         }
