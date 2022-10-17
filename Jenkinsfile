@@ -33,7 +33,7 @@ pipeline{
         stage('execute maven'){
             steps{
                 rtMavenRun(
-                    tool:MVN,
+                    tool:'MVN',
                     pom:'pom.xml',
                     goals:'clean package',
                     deployerId:"Maven_Deployer"
