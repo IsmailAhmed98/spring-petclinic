@@ -9,11 +9,7 @@ pipeline{
 
             }
         }
-        stage('Build'){
-            steps{
-                sh 'mvn package'
-            }
-        }
+        
         stage('Artifactory'){
             steps{
                     archiveArtifacts artifacts: 'target/*.jar'
@@ -33,9 +29,9 @@ pipeline{
         stage('execute maven'){
             steps{
                 rtMavenRun(
-                    tool:'MVN',
-                    pom:'pom.xml',
-                    goals:'clean install',
+                    tool:"MVN",
+                    pom:"pom.xml",
+                    goals:"clean install",
                     deployerId:"Maven_Deployer"
                 )
             }
