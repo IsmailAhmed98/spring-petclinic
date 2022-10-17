@@ -22,7 +22,7 @@ pipeline{
         }
         stage('Artifactory Config'){
             steps{
-                rtmavenDeployer(
+                rtMavenDeployer(
                     id:"Maven_Deployer",
                     sevrerId:"JFROG-ID",
                     releaseRepo:"prac-libs-release-local",
