@@ -1,9 +1,9 @@
 pipeline {
-    agent any
+    agent {label OPNEJDK-2}
     stages {
         stage ('Clone') {
             steps {
-                git url: "https://github.com/jfrog/project-examples.git"
+                git branch:'main',url: "https://github.com/IsmailAhmed98/spring-petclinic.git"
             }
         }
 
