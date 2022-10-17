@@ -21,4 +21,11 @@ pipeline{
             
         }
     }
+    post{
+        always{
+            mail subject: 'Build completed',
+                 body: 'Build has been completed',
+                 to: 'ismailahmed@gmail.com'
+        }
+    }
 }
