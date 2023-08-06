@@ -1,5 +1,6 @@
 pipeline{
     agent {label 'ubuntu'}
+    parameters { choice(name: 'BUILD', choices: ['package', 'clean'], description: 'The build command') }
     triggers { pollSCM('* * * * *') }
     stages{
         stage('Clone'){
@@ -9,7 +10,7 @@ pipeline{
         }
         stage('build'){
             steps{
-                sh '/opt/apache-maven-3.9.4/bin/mvn package'
+                sh '/opt/apache-maven-3.9.4/bin/mvn ${params.BUILD}'
             }
         }
         stage('archive tests'){
