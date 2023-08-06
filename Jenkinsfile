@@ -11,7 +11,7 @@ pipeline{
         }
         stage('build'){
             steps{
-                sh 'mvn ${params.BUILD}'
+                sh 'mvn package'
             }
         }
         stage('archive tests'){
