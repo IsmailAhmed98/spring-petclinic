@@ -1,5 +1,6 @@
 pipeline{
     agent {label 'ubuntu'}
+    triggers { pollSCM('* * * * *') }
     stages{
         stage('Clone'){
             steps{
