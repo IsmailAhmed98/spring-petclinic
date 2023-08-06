@@ -1,5 +1,6 @@
 pipeline{
     agent {label 'ubuntu'}
+    tools {maven 'MAVEN_HOME'}
     parameters { choice(name: 'BUILD', choices: ['package', 'clean'], description: 'The build command') }
     triggers { pollSCM('* * * * *') }
     stages{
@@ -10,7 +11,7 @@ pipeline{
         }
         stage('build'){
             steps{
-                sh '/opt/apache-maven-3.9.4/bin/mvn ${params.BUILD}'
+                sh 'mvn ${params.BUILD}'
             }
         }
         stage('archive tests'){
