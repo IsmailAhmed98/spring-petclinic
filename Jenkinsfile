@@ -1,17 +1,17 @@
 pipeline{
     stages{
         stage('Clone'){
-            step{
+            steps{
                 git branch: 'main', url: 'https://github.com/IsmailAhmed98/spring-petclinic.git'
             }
         }
         stage('build'){
-            step{
+            steps{
                 sh '/opt/apache-maven-3.9.4/bin/mvn package'
             }
         }
         stage('archive tests'){
-            step{
+            steps{
                 junit 'target/surefire-reports/*.xml'
             }
         }
