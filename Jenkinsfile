@@ -1,12 +1,13 @@
 pipeline{
     agent {label 'ubuntu'}
     tools {maven 'MAVEN_HOME'}
-    parameters { choice(name: 'BUILD', choices: ['package', 'clean'], description: 'The build command') }
+    parameters { choice(name: 'BUILD', choices: ['package', 'clean'], description: 'The build command') 
+                 choice(name: 'BRANCH', choices: ['main', 'Ismail'], description: 'The branch to use')}
     triggers { pollSCM('* * * * *') }
     stages{
         stage('Clone'){
             steps{
-                git branch: 'main', url: 'https://github.com/IsmailAhmed98/spring-petclinic.git'
+                git branch: "${params.BRANCH}", url: 'https://github.com/IsmailAhmed98/spring-petclinic.git'
             }
         }
         stage('build'){
