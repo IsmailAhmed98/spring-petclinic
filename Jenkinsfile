@@ -16,11 +16,11 @@ pipeline{
         }
         stage ('Artifactory configuration') {
             steps {
-                rtServer (
-                    id: "JFROG_INSTANCE",
-                    url: 'https://ismailahm.jfrog.io/',
-                    credentialsId: "CRED_ID"
-                )
+               // rtServer (
+                  //  id: "JFROG_INSTANCE",
+                  //  url: 'https://ismailahm.jfrog.io/',
+                  //  credentialsId: "CRED_ID"
+               // )
 
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
