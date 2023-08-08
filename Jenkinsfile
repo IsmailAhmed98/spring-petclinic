@@ -18,6 +18,7 @@ pipeline{
                 mvn "${params.Build}"
             }
         }
+    }
     post{
         always{
             mail subject: 'Completed',
@@ -31,7 +32,6 @@ pipeline{
             mail subject: 'Successful',
                 body: "The build was a success for build name $env.JOB_NAME and ID $env.BUILD_ID"
                 junit 'target/surefire-reports/*.xml'
-        }
         }
     }
 }
