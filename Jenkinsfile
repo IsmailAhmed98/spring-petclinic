@@ -3,7 +3,7 @@ pipeline{
     tools {maven 'MAVEN_HOME'}
     parameters{choice(name: 'Branch', choices:['main', 'Ismail'], description: 'The branch to use')
                 choice(name:' Build', choices:['package','clean'], description: 'The build command is')}
-    triggers{pollSCM(* * * * *)}
+    triggers{pollSCM('* * * * *')}
     stages{
         stage('Clone'){
             steps{
