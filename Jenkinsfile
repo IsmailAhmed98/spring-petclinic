@@ -2,7 +2,7 @@ pipeline{
     agent any
     tools {maven 'MAVEN_HOME'}
     parameters{choice(name: 'Branch', choices:['main', 'Ismail'], description: 'The branch to use')
-                choice(name:' Build', choices:['package','clean'], description: 'The build command is')}
+                choice(name:' Build', choices:['clean install','package'], description: 'The build command is')}
     triggers{pollSCM('* * * * *')}
     stages{
         stage('Clone'){
@@ -42,7 +42,7 @@ pipeline{
                 rtMavenRun (
                     tool: MAVEN_HOME, // Tool name from Jenkins configuration
                     pom: 'pom.xml',
-                    goals: 'clean install',
+                    goals: "${params.Build}",
                     deployerId: "MAVEN_DEPLOYER",
                     resolverId: "MAVEN_RESOLVER"
                 )
