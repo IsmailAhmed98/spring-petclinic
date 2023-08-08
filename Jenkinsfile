@@ -14,9 +14,46 @@ pipeline{
 
             }
         }
-        stage('Build'){
-            steps{
-                mvn "${params.Build}"
+        stage ('Artifactory configuration') {
+            steps {
+                rtServer (
+                    id: "JFROG_INSTANCE",
+                    url: 'https://ismailahm.jfrog.io/',
+                    credentialsId: 
+                )
+
+                rtMavenDeployer (
+                    id: "MAVEN_DEPLOYER",
+                    serverId: "JFROG",
+                    releaseRepo: "libs-release-local",
+                    snapshotRepo: "libs-snapshot-local"
+                )
+
+                rtMavenResolver (
+                    id: "MAVEN_RESOLVER",
+                    serverId: "JFROG",
+                    releaseRepo: "libs-release-local",
+                    snapshotRepo: "libs-snapshot-local"
+                )
+            }
+        }
+        stage ('Exec Maven') {
+            steps {
+                rtMavenRun (
+                    tool: MAVEN_HOME, // Tool name from Jenkins configuration
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    deployerId: "MAVEN_DEPLOYER",
+                    resolverId: "MAVEN_RESOLVER"
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "JFROG_INSTANCE"
+                )
             }
         }
     }
@@ -39,3 +76,4 @@ pipeline{
         }
     }
 }
+
