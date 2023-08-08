@@ -19,7 +19,7 @@ pipeline{
                 rtServer (
                     id: "JFROG_INSTANCE",
                     url: 'https://ismailahm.jfrog.io/',
-                    credentialsId: 
+                    credentialsId: "CRED_ID"
                 )
 
                 rtMavenDeployer (
