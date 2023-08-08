@@ -1,5 +1,5 @@
 pipeline{
-    agent {label 'ubuntu'}
+    agent any
     tools {maven 'MAVEN_HOME'}
     parameters{choice(name: 'Branch', choices:['main', 'Ismail'], description: 'The branch to use')
                 choice(name:' Build', choices:['package','clean'], description: 'The build command is')}
