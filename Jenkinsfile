@@ -7,7 +7,7 @@ pipeline{
     stages{
         stage('Clone'){
             steps{
-                git branch: "${params.Branch}", url: 'git@github.com:IsmailAhmed98/spring-petclinic.git'
+                git branch: "${params.Branch}", url: 'https://github.com/IsmailAhmed98/spring-petclinic.git'
                 mail subject: 'Started',
                     body: "The build has begun for build name $env.JOB_NAME and ID $env.BUILD_ID"
 
