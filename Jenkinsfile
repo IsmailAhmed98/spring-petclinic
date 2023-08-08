@@ -40,7 +40,7 @@ pipeline{
         stage ('Exec Maven') {
             steps {
                 rtMavenRun (
-                    tool: MAVEN_HOME, // Tool name from Jenkins configuration
+                    tool: "MAVEN_HOME", // Tool name from Jenkins configuration
                     pom: 'pom.xml',
                     goals: "${params.Build}",
                     deployerId: "MAVEN_DEPLOYER",
