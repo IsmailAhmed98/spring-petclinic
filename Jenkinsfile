@@ -24,14 +24,14 @@ pipeline{
 
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
-                    serverId: "JFROG",
+                    serverId: "JFROG_INSTANCE",
                     releaseRepo: "libs-release-local",
                     snapshotRepo: "libs-snapshot-local"
                 )
 
                 rtMavenResolver (
                     id: "MAVEN_RESOLVER",
-                    serverId: "JFROG",
+                    serverId: "JFROG_INSTANCE",
                     releaseRepo: "libs-release-local",
                     snapshotRepo: "libs-snapshot-local"
                 )
