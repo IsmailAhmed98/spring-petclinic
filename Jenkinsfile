@@ -1,55 +1,41 @@
 pipeline{
     agent any
-    tools {maven 'MAVEN_HOME'}
-    parameters{choice(name: 'Branch', choices:['main', 'Ismail'], description: 'The branch to use')
-                choice(name:' Build', choices:['clean install','package'], description: 'The build command is')}
-    triggers{pollSCM('* * * * *')}
+    tools {maven 'MVN'
+    }
     stages{
-        stage('Clone'){
+        stage('clone'){
             steps{
-                git branch: "${params.Branch}", url: 'https://github.com/IsmailAhmed98/spring-petclinic.git'
-                mail subject: 'Started',
-                    body: "The build has begun for build name $env.JOB_NAME and ID $env.BUILD_ID",
-                    to : 'ismail@gmail.com'
-
+                git branch:'main', url: 'https://github.com/IsmailAhmed98/spring-petclinic.git'
             }
         }
-        stage ('Artifactory configuration') {
-            steps {
-               // rtServer (
-                  //  id: "JFROG_INSTANCE",
-                  //  url: 'https://ismailahm.jfrog.io/',
-                  //  credentialsId: "CRED_ID"
-               // )
-
-                rtMavenDeployer (
-                    id: "MAVEN_DEPLOYER",
+        stage('Artifactory'){
+            steps{
+                rtMavenDeployer(
+                    id: 'MVN_DEPLOYER',
                     serverId: "JFROG_INSTANCE",
-                    releaseRepo: "libs-release-local",
-                    snapshotRepo: "libs-snapshot-local"
-                )
-
-                rtMavenResolver (
-                    id: "MAVEN_RESOLVER",
-                    serverId: "JFROG_INSTANCE",
-                    releaseRepo: "libs-release-local",
-                    snapshotRepo: "libs-snapshot-local"
-                )
+                    releaseRepo: "isma-libs-release-local",
+                    snapshotRepo: "isma-libs-snapshot-local" 
+                    )
             }
         }
-        stage ('Exec Maven') {
-            steps {
+        stage('SONARQUBE'){
+            steps{
+                withSonarQubeEnv('SONARQUBE'){
+                    sh "mvn clean package sonar:sonar -D.sonar.organization=ismailahm09 -D.sonar.ProjectKey=ismailahm09"
+                }
+            }
+        }
+        stage('Build'){
+            steps{
                 rtMavenRun (
-                    tool: "MAVEN_HOME", // Tool name from Jenkins configuration
+                    tool: "MVN", // Tool name from Jenkins configuration
                     pom: 'pom.xml',
-                    goals: "${params.Build}",
-                    deployerId: "MAVEN_DEPLOYER",
-                    resolverId: "MAVEN_RESOLVER"
+                    goals: 'clean install',
+                    deployerId: "MVN_DEPLOYER"
                 )
             }
         }
-
-        stage ('Publish build info') {
+         stage ('Publish build info') {
             steps {
                 rtPublishBuildInfo (
                     serverId: "JFROG_INSTANCE"
@@ -57,23 +43,4 @@ pipeline{
             }
         }
     }
-    post{
-        always{
-            mail subject: 'Completed',
-                body: "The build has been completed for build name $env.JOB_NAME and ID $env.BUILD_ID",
-                to: 'ismail@gmail.com'
-        }
-        failure{
-            mail subject: 'Failure',
-                body:"The build has failed for build name $env.JOB_NAME and ID $env.BUILD_ID",
-                to: 'ismail@gmail.com'
-        }
-        success{
-            mail subject: 'Successful',
-                body: "The build was a success for build name $env.JOB_NAME and ID $env.BUILD_ID",
-                to: 'ismail@gmail.com'
-                junit 'target/surefire-reports/*.xml'
-        }
-    }
 }
-
