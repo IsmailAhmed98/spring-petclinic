@@ -23,7 +23,7 @@ pipeline{
         stage('SONARQUBE'){
             steps{
                 withSonarQubeEnv('SONARQUBE'){
-                    sh "mvn clean package sonar:sonar -D.sonar.organization=ismailahm09 -D.sonar.ProjectKey=ismailahm09"
+                    sh "mvn clean package sonar:sonar -Dsonar.organization=ismailahm09 -Dsonar.Token= 94c8f113dc596ada8d537e8bb515bb504b2ffc6c  -Dsonar.projectKey=ismailahmed"
                 }
             }
         }
