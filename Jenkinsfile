@@ -1,6 +1,8 @@
 pipeline{
     agent any
-    tools {maven 'MVN'
+    tools {maven 'MVN'}
+    triggers{
+        pollSCM('* * * * *') 
     }
     stages{
         stage('clone'){
