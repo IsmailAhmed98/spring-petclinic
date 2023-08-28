@@ -4,6 +4,12 @@ pool:
 trigger: 
   - main
 stages:
+  - stage: 'clone'
+    jobs:
+      - job: 'cloning'
+        steps: 
+          - script: 'git clone https://github.com/IsmailAhmed98/spring-petclinic.git'
+            displayName: 'Cloning project'  
   - stage: 'build'
     jobs:
     - job: 'build_project'
