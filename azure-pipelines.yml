@@ -10,6 +10,13 @@ stages:
         steps: 
           - script: 'git clone https://github.com/IsmailAhmed98/spring-petclinic.git'
             displayName: 'Cloning project'  
+  - stage:
+    jobs: 
+    - job: 'Prepare_analysis'
+      steps: 
+        - task: 'SonarQubePrepare@4'
+          inputs:
+            projectKey: 'ismailahmed'
   - stage: 'build'
     jobs:
     - job: 'build_project'
