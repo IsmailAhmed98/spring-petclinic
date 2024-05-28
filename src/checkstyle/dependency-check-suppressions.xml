@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<suppressions xmlns="http://jeremylong.github.io/DependencyCheck/dependency-suppression.1.2.xsd">
-    <suppress>
-        <filePath regex="true">.*</filePath>
-        <note>Suppress NoHttp rule for external dependencies</note>
-    </suppress>
-</suppressions>
