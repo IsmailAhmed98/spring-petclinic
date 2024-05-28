@@ -161,6 +161,25 @@
           </execution>
         </executions>
       </plugin>
+      <build>
+    <plugins>
+        <plugin>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <version>6.1.6</version> <!-- Use the latest version -->
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <suppressionFile>${project.basedir}/dependency-check-suppressions.xml</suppressionFile>
+            </configuration>
+        </plugin>
+    </plugins>
+
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
