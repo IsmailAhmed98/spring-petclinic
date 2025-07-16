@@ -6,6 +6,6 @@ spec:
   ports:
     - targetPort: 8080
       port: 8081
-      nordPort: 30081
+      nodePort: 30081
       protocol: TCP
   type: NodePort
