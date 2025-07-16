@@ -9,7 +9,8 @@ spec:
       app: SPC-project
   template:
     metadata: 
-      labels: SPC-project
+      labels: 
+        app: SPC-project
     spec:
       containers:
         - image: ismailahmed09/spring-petclinic:1.0
