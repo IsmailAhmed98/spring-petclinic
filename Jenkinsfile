@@ -25,8 +25,17 @@ pipeline{
                         sh '''
                         docker build -t ismailahmed09/spring-petclinic:1.0 .
                         docker push ismailahmed09/spring-petclinic:1.0
-                        docker run -d -p 8081:8080 ismailahmed09/spring-petclinic:1.0
                         '''
+                }
+            }
+        }
+        stage("K8s Deploy"){
+            steps {
+                withCredentials([file(credentialsId: 'Kube-Config', variable: 'KUBECONFIG')]) {
+                        sh '''
+                            kubectl apply -f deployment.yaml
+                            kubectl apply -f service.yaml
+                            '''
                 }
             }
         }
