@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: SPC-project
+spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: SPC-project
+  template:
+    metadata: 
+      labels: SPC-project
+    spec:
+      containers:
+        - image: ismailahmed09/spring-petclinic:1.0
+          name: SPC-project
+          ports: 
+            - containerPort: 8081
