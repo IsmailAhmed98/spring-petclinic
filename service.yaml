@@ -4,7 +4,8 @@ metadata:
   name: spc-project
 spec:
   ports:
-    - port: 80
-      targetPort: 8081
+    - targetPort: 8080
+      port: 8081
+      nordPort: 30081
       protocol: TCP
   type: NodePort
