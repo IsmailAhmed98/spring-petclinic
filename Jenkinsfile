@@ -25,7 +25,7 @@ pipeline{
                         sh '''
                         docker build -t ismailahmed09/spring-petclinic:1.0 .
                         docker push ismailahmed09/spring-petclinic:1.0
-                        docker run -d -P ismailahmed09/spring-petclinic:1.0
+                        docker run -d -p 8080:8080 ismailahmed09/spring-petclinic:1.0
                         '''
                 }
             }
