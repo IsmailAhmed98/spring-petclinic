@@ -16,4 +16,4 @@ spec:
         - image: ismailahmed09/spring-petclinic:1.0
           name: spc-project
           ports: 
-            - containerPort: 8081
+            - containerPort: 8080
