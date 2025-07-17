@@ -22,11 +22,19 @@ pipeline{
             steps {
                 withDockerRegistry(credentialsId: 'Docker-ID', url: "https://index.docker.io/v1/") 
                 {
-                        sh '''
-                        docker build -t ismailahmed09/spring-petclinic:1.0 .
-                        docker push ismailahmed09/spring-petclinic:1.0
-                        '''
+                        sh 'docker build -t ismailahmed09/spring-petclinic:1.0 .
+                        '
                 }
+            }
+        }
+        stage("Trivy test"){
+            steps {
+                sh 'trivy image ismailahmed09/spring-petclinic:1.0'
+            }
+        }
+        stage("Docker push"){
+            steps {
+                sh ' docker push ismailahmed09/spring-petclinic:1.0'      
             }
         }
         stage("K8s Deploy"){
